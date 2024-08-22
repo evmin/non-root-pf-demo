@@ -93,6 +93,10 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
         }
       ]
       secrets: [
+        {
+            name: 'api-key'
+            value: '${openAIService.listKeys().key1}'
+        }
       ]
     }
     template: {
@@ -111,7 +115,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
             }
             {
               name: 'API_KEY' 
-              value: '${openAIService.listKeys().key1}'
+              secretRef: 'api-key'
             }
             {
               name: 'MODEL_NAME' 
