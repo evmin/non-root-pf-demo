@@ -1,0 +1,10 @@
+$schema: 
+  https://azuremlschemas.azureedge.net/promptflow/latest/AzureOpenAIConnection.schema.json
+type: azure_open_ai
+name: gpt-4o-mini
+module: promptflow.connections
+api_base: ${env:API_BASE}
+api_key: ${env:API_KEY}
+api_type: azure
+api_version: '2024-06-01'
+auth_mode: key

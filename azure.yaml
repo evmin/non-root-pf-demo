@@ -1,0 +1,12 @@
+# Application name
+name: sop-doc-creation
+metadata:
+    template: azd-init@1.4.2
+
+services:
+    app:
+        project: src/pf
+        host: containerapp
+        language: python
+        docker:
+            path: Dockerfile
