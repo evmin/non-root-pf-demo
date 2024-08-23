@@ -118,7 +118,7 @@ module app 'modules/app/containerapp.bicep' = {
     applicationInsightsName: monitoring.outputs.appInsightsName
     azureOpenAIName: aiServices.outputs.aoaiName  
     azureModelDeploymentName: deployments[0].name
-    identityName: '${abbrs.managedIdentityUserAssignedIdentities}functionsapi-${resourceToken}'
+    identityName: '${abbrs.managedIdentityUserAssignedIdentities}app-${resourceToken}'
     containerRegistryName: registry.outputs.name
     exists: appExists
   }
@@ -128,7 +128,7 @@ output AZURE_OPENAI_ENDPOINT string = aiServices.outputs.aoaiEndpoint
 output AZURE_OPENAI_ACCOUNT_NAME string = aiServices.outputs.aoaiName
 output AZURE_OPENAI_DEPLOYMENT_NAME string = deployments[0].name
 
-// mandatory output
+// mandatory output fopr container deployments
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = registry.outputs.loginServer
 output AZURE_KEY_VAULT_NAME string = keyVault.outputs.name
 output AZURE_KEY_VAULT_ENDPOINT string = keyVault.outputs.endpoint

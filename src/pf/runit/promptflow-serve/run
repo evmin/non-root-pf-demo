@@ -9,7 +9,7 @@ conda run -n promptflow-serve pf connection create --file /home/pf/connections/g
 WORKER_NUM=${PROMPTFLOW_WORKER_NUM:-"2"}
 WORKER_THREADS=${PROMPTFLOW_WORKER_THREADS:-"1"}
 SERVING_ENGINE=${PROMPTFLOW_SERVING_ENGINE:-"flask"}
-gunicorn_app="promptflow.core._serving.app:create_app(engine='${SERVING_ENGINE}')"
+gunicorn_app="promptflow.core._serving.app:create_app(engine='${SERVING_ENGINE}',MODEL_NAME='${MODEL_NAME}')"
 cd /home/pf/flow
 if [ "$SERVING_ENGINE" = "flask" ]; then
     echo "start promptflow serving with worker_num: ${WORKER_NUM}, worker_threads: ${WORKER_THREADS}, app: ${gunicorn_app}"

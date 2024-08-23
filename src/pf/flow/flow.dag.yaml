@@ -1,6 +1,8 @@
 $schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
 environment:
   python_requirements_txt: requirements.txt
+environment_variables:
+  MODEL_NAME: "gpt-4o-mini"
 inputs:
   chat_history:
     type: list

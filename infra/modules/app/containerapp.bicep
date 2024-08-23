@@ -45,13 +45,10 @@ resource acrPullRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   }
 }
 
-module fetchLatestImage './fetch-container-image.bicep' = {
-  name: '${name}-fetch-image'
-  params: {
-    exists: exists
-    name: name
-  }
+resource deployedApp 'Microsoft.App/containerApps@2023-04-01-preview' existing = if (exists) {
+  name: name
 }
+var containerImage = exists && contains(deployedApp.properties.template.containers[0], 'image') ? deployedApp.properties.template.containers[0].image : 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
 
 resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-10-01' = {
   name: name
@@ -102,7 +99,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
     template: {
       containers: [
         {
-          image: fetchLatestImage.outputs.?containers[?0].?image ?? 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
+          image: containerImage
           name: 'main'
           env: [
             {
@@ -137,6 +134,3 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
 }
 
 output defaultDomain string = containerAppsEnvironment.properties.defaultDomain
-output name string = app.name
-output uri string = 'https://${app.properties.configuration.ingress.fqdn}'
-output id string = app.id
